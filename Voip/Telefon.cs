@@ -150,8 +150,8 @@ namespace Voip
 
         private void displayNotifyMsg(string msg)
         {
-            notificationsListBox.Items.Add(msg);
-            notificationsListBox.TopIndex = notificationsListBox.Items.Count - 1;
+            Listbox.Items.Add(msg);
+            Listbox.TopIndex = Listbox.Items.Count - 1;
         }
         private void AbtoPhone_OnInitialized(string Msg)
         {

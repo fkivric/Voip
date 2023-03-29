@@ -45,7 +45,7 @@
             this.muteSpeakerFlag = new System.Windows.Forms.CheckBox();
             this.spkVolumeBar = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
-            this.notificationsListBox = new System.Windows.Forms.ListBox();
+            this.Listbox = new System.Windows.Forms.ListBox();
             this.micVolumeBar = new System.Windows.Forms.ProgressBar();
             this.spkVolume = new System.Windows.Forms.TrackBar();
             this.activeConnListbox = new System.Windows.Forms.ListBox();
@@ -274,14 +274,14 @@
             this.label1.TabIndex = 38;
             this.label1.Text = "User Input: ";
             // 
-            // notificationsListBox
+            // Listbox
             // 
-            this.notificationsListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.notificationsListBox.FormattingEnabled = true;
-            this.notificationsListBox.Location = new System.Drawing.Point(12, 287);
-            this.notificationsListBox.Name = "notificationsListBox";
-            this.notificationsListBox.Size = new System.Drawing.Size(385, 106);
-            this.notificationsListBox.TabIndex = 44;
+            this.Listbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Listbox.FormattingEnabled = true;
+            this.Listbox.Location = new System.Drawing.Point(12, 287);
+            this.Listbox.Name = "Listbox";
+            this.Listbox.Size = new System.Drawing.Size(385, 106);
+            this.Listbox.TabIndex = 44;
             // 
             // micVolumeBar
             // 
@@ -471,7 +471,7 @@
             this.Controls.Add(this.muteSpeakerFlag);
             this.Controls.Add(this.spkVolumeBar);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.notificationsListBox);
+            this.Controls.Add(this.Listbox);
             this.Controls.Add(this.micVolumeBar);
             this.Controls.Add(this.spkVolume);
             this.Controls.Add(this.activeConnListbox);
@@ -515,7 +515,7 @@
         private System.Windows.Forms.CheckBox muteSpeakerFlag;
         private System.Windows.Forms.ProgressBar spkVolumeBar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox notificationsListBox;
+        private System.Windows.Forms.ListBox Listbox;
         private System.Windows.Forms.ProgressBar micVolumeBar;
         private System.Windows.Forms.TrackBar spkVolume;
         private System.Windows.Forms.ListBox activeConnListbox;
