@@ -35,6 +35,54 @@ namespace Voip
         private bool m_MP3RecordingEnabled = false;
         private bool m_AutoAnswerEnabled = false;
 
+        public Telefon()
+        {
+            InitializeComponent();
+        }
+
+        protected bool ConfigurePhone()
+        {
+            //Assign event handlers
+            this.AbtoPhone.OnInitialized += new _IAbtoPhoneEvents_OnInitializedEventHandler(this.AbtoPhone_OnInitialized);
+            this.AbtoPhone.OnLineSwiched += new _IAbtoPhoneEvents_OnLineSwichedEventHandler(this.AbtoPhone_OnLineSwiched);
+            this.AbtoPhone.OnEstablishedCall += new _IAbtoPhoneEvents_OnEstablishedCallEventHandler(this.AbtoPhone_OnEstablishedCall);
+            this.AbtoPhone.OnIncomingCall += new _IAbtoPhoneEvents_OnIncomingCallEventHandler(this.AbtoPhone_OnIncomingCall);
+            this.AbtoPhone.OnClearedCall += new _IAbtoPhoneEvents_OnClearedCallEventHandler(this.AbtoPhone_OnClearedCall);
+            this.AbtoPhone.OnVolumeUpdated += new _IAbtoPhoneEvents_OnVolumeUpdatedEventHandler(this.AbtoPhone_OnVolumeUpdated);
+            this.AbtoPhone.OnRegistered += new _IAbtoPhoneEvents_OnRegisteredEventHandler(this.AbtoPhone_OnRegistered);
+            this.AbtoPhone.OnPlayFinished += new _IAbtoPhoneEvents_OnPlayFinishedEventHandler(this.AbtoPhone_OnPlayFinished);
+            this.AbtoPhone.OnEstablishedConnection += new _IAbtoPhoneEvents_OnEstablishedConnectionEventHandler(this.AbtoPhone_OnEstablishedConnection);
+            this.AbtoPhone.OnClearedConnection += new _IAbtoPhoneEvents_OnClearedConnectionEventHandler(this.AbtoPhone_OnClearedConnection);
+            this.AbtoPhone.OnToneReceived += new _IAbtoPhoneEvents_OnToneReceivedEventHandler(this.AbtoPhone_OnToneReceived);
+            this.AbtoPhone.OnTextMessageReceived += new _IAbtoPhoneEvents_OnTextMessageReceivedEventHandler(this.AbtoPhone_OnTextMessageReceived);
+            this.AbtoPhone.OnTextMessageSentStatus += new _IAbtoPhoneEvents_OnTextMessageSentStatusEventHandler(AbtoPhone_OnTextMessageSentStatus);
+            this.AbtoPhone.OnPhoneNotify += new _IAbtoPhoneEvents_OnPhoneNotifyEventHandler(this.AbtoPhone_OnPhoneNotify);
+            this.AbtoPhone.OnRemoteAlerting2 += new _IAbtoPhoneEvents_OnRemoteAlerting2EventHandler(AbtoPhone_OnRemoteAlerting2);
+            this.AbtoPhone.OnSubscribeStatus += new _IAbtoPhoneEvents_OnSubscribeStatusEventHandler(AbtoPhone_OnSubscribeStatus);
+            this.AbtoPhone.OnSubscriptionNotify += new _IAbtoPhoneEvents_OnSubscriptionNotifyEventHandler(AbtoPhone_OnSubscriptionNotify);
+            //Get config
+            CConfig phoneCfg = AbtoPhone.Config;
+
+            //Load config values from file
+            phoneCfg.Load(cfgFileName);
+
+
+            try
+            {
+                //Apply modified config
+                AbtoPhone.ApplyConfig();
+
+
+                AbtoPhone.Initialize();
+            }
+            catch (Exception e)
+            {
+                displayNotifyMsg(e.Message);
+                return false;
+            }
+
+            return true;
+        }
         public class ConnListBoxItem
         {
             public int handle;
@@ -77,10 +125,6 @@ namespace Voip
             public string m_callTimeStr;
         }
 
-        public Telefon()
-        {
-            InitializeComponent();
-        }
         private Button getLineButton(int lineId)
         {
             return buttonLine1;
@@ -89,7 +133,7 @@ namespace Voip
         {
             ChageLineCaption(li);
 
-            buttonStartHangupCall.Text = li.m_bCallEstablished || li.m_bCalling ? "HangUp" : "Arama Başlat";
+            buttonStartHangupCall.Text = li.m_bCallEstablished || li.m_bCalling ? "Durdur" : "Arama Başlat";
 
             buttonHoldRetrieve.Visible = li.m_bCallEstablished;
             buttonHoldRetrieve.Text = li.m_bCallHeld ? "Retrieve" : "Tut";
@@ -413,50 +457,6 @@ namespace Voip
         {
             string str = string.Format("OnVoiceMail: {0}", StateStr);
             displayNotifyMsg(str);
-        }
-
-        protected bool ConfigurePhone()
-        {
-            //Assign event handlers
-            this.AbtoPhone.OnInitialized += new _IAbtoPhoneEvents_OnInitializedEventHandler(this.AbtoPhone_OnInitialized);
-            this.AbtoPhone.OnLineSwiched += new _IAbtoPhoneEvents_OnLineSwichedEventHandler(this.AbtoPhone_OnLineSwiched);
-            this.AbtoPhone.OnEstablishedCall += new _IAbtoPhoneEvents_OnEstablishedCallEventHandler(this.AbtoPhone_OnEstablishedCall);
-            this.AbtoPhone.OnIncomingCall += new _IAbtoPhoneEvents_OnIncomingCallEventHandler(this.AbtoPhone_OnIncomingCall);
-            this.AbtoPhone.OnClearedCall += new _IAbtoPhoneEvents_OnClearedCallEventHandler(this.AbtoPhone_OnClearedCall);
-            this.AbtoPhone.OnVolumeUpdated += new _IAbtoPhoneEvents_OnVolumeUpdatedEventHandler(this.AbtoPhone_OnVolumeUpdated);
-            this.AbtoPhone.OnRegistered += new _IAbtoPhoneEvents_OnRegisteredEventHandler(this.AbtoPhone_OnRegistered);
-            this.AbtoPhone.OnPlayFinished += new _IAbtoPhoneEvents_OnPlayFinishedEventHandler(this.AbtoPhone_OnPlayFinished);
-            this.AbtoPhone.OnEstablishedConnection += new _IAbtoPhoneEvents_OnEstablishedConnectionEventHandler(this.AbtoPhone_OnEstablishedConnection);
-            this.AbtoPhone.OnClearedConnection += new _IAbtoPhoneEvents_OnClearedConnectionEventHandler(this.AbtoPhone_OnClearedConnection);
-            this.AbtoPhone.OnToneReceived += new _IAbtoPhoneEvents_OnToneReceivedEventHandler(this.AbtoPhone_OnToneReceived);
-            this.AbtoPhone.OnTextMessageReceived += new _IAbtoPhoneEvents_OnTextMessageReceivedEventHandler(this.AbtoPhone_OnTextMessageReceived);
-            this.AbtoPhone.OnTextMessageSentStatus += new _IAbtoPhoneEvents_OnTextMessageSentStatusEventHandler(AbtoPhone_OnTextMessageSentStatus);
-            this.AbtoPhone.OnPhoneNotify += new _IAbtoPhoneEvents_OnPhoneNotifyEventHandler(this.AbtoPhone_OnPhoneNotify);
-            this.AbtoPhone.OnRemoteAlerting2 += new _IAbtoPhoneEvents_OnRemoteAlerting2EventHandler(AbtoPhone_OnRemoteAlerting2);
-            this.AbtoPhone.OnSubscribeStatus += new _IAbtoPhoneEvents_OnSubscribeStatusEventHandler(AbtoPhone_OnSubscribeStatus);
-            this.AbtoPhone.OnSubscriptionNotify += new _IAbtoPhoneEvents_OnSubscriptionNotifyEventHandler(AbtoPhone_OnSubscriptionNotify);
-            //Get config
-            CConfig phoneCfg = AbtoPhone.Config;
-
-            //Load config values from file
-            phoneCfg.Load(cfgFileName);
-
-
-            try
-            {
-                //Apply modified config
-                AbtoPhone.ApplyConfig();
-
-
-                AbtoPhone.Initialize();
-            }
-            catch (Exception e)
-            {
-                displayNotifyMsg(e.Message);
-                return false;
-            }
-
-            return true;
         }
         private void frmPhone_Load(object sender, EventArgs e)
         {
